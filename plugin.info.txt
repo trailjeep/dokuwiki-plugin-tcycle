@@ -1,0 +1,8 @@
+# General Plugin Info do not edit
+base   tcycle
+author Reinhard Kaeferboeck
+email  rfk@kaeferboeck.info
+date   2019-11-15
+name   tCycle Plugin
+desc   a minimalist jQuery slideshow plugin
+url    http://www.dokuwiki.org/plugin:tcycle
