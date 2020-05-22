@@ -37,8 +37,9 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
 				$width       = $this->_getAttribute($attributes, "width", "600px");
 				$height      = $this->_getAttribute($attributes, "height", "400px");
                 $namespace   = $this->_getAttribute($attributes, "namespace", "");
+				$metadata    = $this->_getAttribute($attributes, "metadata", "false");
 
-                return array($state, array($dataspeed,$datafx,$datatimeout, $width, $height, $namespace));
+                return array($state, array($dataspeed,$datafx,$datatimeout, $width, $height, $namespace, $metadata));
             case DOKU_LEXER_UNMATCHED:
                 return array($state, $match);
             case DOKU_LEXER_EXIT:
@@ -55,7 +56,7 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
             list($state,$match) = $data;
             switch ($state) {
               case DOKU_LEXER_ENTER :
-                list($this->dataspeed,$this->datafx,$this->datatimeout,$this->width,$this->height,$this->namespace) = $match;
+                list($this->dataspeed,$this->datafx,$this->datatimeout,$this->width,$this->height,$this->namespace,$this->metadata) = $match;
 				$renderer->doc .= '<div class="tcycle" style="width: '.$this->width.';"';
 				$renderer->doc .= 'data-speed="'.$this->dataspeed.'" ';
 				$renderer->doc .= 'data-fx="'.$this->datafx.'" ';
@@ -118,11 +119,15 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
 			$title = $meta->getField('Simple.Title');
 			$alt   = $meta->getField('Iptc.Caption');
 			$images .= '<figure>';
-			$images .= '<figcaption>'.$title.'</figcaption>';
+			if ( $this->metadata === 'true' ) {
+				$images .= '<figcaption>'.$title.'</figcaption>';
+			}
 			$images .= '<a href="/_detail/'.$ns.'/'.$base.'" target="'.$target.'" rel ="'.$relnf.' noopener">';
 			$images .= '<img class="media" src=" /_media/'.$ns.'/'.$base.'" title="'.$title.'" alt="'.$alt.'" style="width: '.$this->width.'; height: '.$this->height.';" />';
 			$images .= '</a>';
-			$images .= '<figcaption>'.$alt.'</figcaption>';
+			if ( $this->metadata === 'true' ) {
+				$images .= '<figcaption>'.$alt.'</figcaption>';
+			}
 			$images .= '</figure>';
        	}
 		return $images;
