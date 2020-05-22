@@ -6,9 +6,10 @@
   */
 
 /* DOKUWIKI:include_once jquery.tcycle.js */
-
+/*
 jQuery(document).ready(function() {
   var tcw = jQuery('div.tcycle').width();
   var tch = jQuery('div.tcycle').height();
   jQuery('div.tcycle img').css({ 'width': tcw+'px', 'height': tch+'px' });
 });
+*/

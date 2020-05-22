@@ -38,7 +38,7 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
 				$height      = $this->_getAttribute($attributes, "height", "400px");
                 $namespace   = $this->_getAttribute($attributes, "namespace", "");
 
-                return array($state, array($dataspeed,$datafx,$datatimeout, $width, $heighti, $namespace));
+                return array($state, array($dataspeed,$datafx,$datatimeout, $width, $height, $namespace));
             case DOKU_LEXER_UNMATCHED:
                 return array($state, $match);
             case DOKU_LEXER_EXIT:
@@ -56,7 +56,7 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
             switch ($state) {
               case DOKU_LEXER_ENTER :
                 list($this->dataspeed,$this->datafx,$this->datatimeout,$this->width,$this->height,$this->namespace) = $match;
-                $renderer->doc .= '<div class="tcycle" style="width: '.$this->width.'; height: '.$this->height.';"';
+				$renderer->doc .= '<div class="tcycle" style="width: '.$this->width.';"';
 				$renderer->doc .= 'data-speed="'.$this->dataspeed.'" ';
 				$renderer->doc .= 'data-fx="'.$this->datafx.'" ';
 				$renderer->doc .= 'data-timeout="'.$this->datatimeout.'">';
@@ -120,7 +120,7 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
 			$images .= '<figure>';
 			$images .= '<figcaption>'.$title.'</figcaption>';
 			$images .= '<a href="/_detail/'.$ns.'/'.$base.'" target="'.$target.'" rel ="'.$relnf.' noopener">';
-			$images .= '<img class="media" src=" /_media/'.$ns.'/'.$base.'" title="'.$title.'" alt="'.$alt.'" />';
+			$images .= '<img class="media" src=" /_media/'.$ns.'/'.$base.'" title="'.$title.'" alt="'.$alt.'" style="width: '.$this->width.'; height: '.$this->height.';" />';
 			$images .= '</a>';
 			$images .= '<figcaption>'.$alt.'</figcaption>';
 			$images .= '</figure>';
