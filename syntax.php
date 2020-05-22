@@ -37,7 +37,7 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
 				$width       = $this->_getAttribute($attributes, "width", "600px");
 				$height      = $this->_getAttribute($attributes, "height", "400px");
                 $namespace   = $this->_getAttribute($attributes, "namespace", "");
-				$metadata    = $this->_getAttribute($attributes, "metadata", "false");
+				$metadata    = $this->_getAttribute($attributes, "metadata", "true");
 
                 return array($state, array($dataspeed,$datafx,$datatimeout, $width, $height, $namespace, $metadata));
             case DOKU_LEXER_UNMATCHED:
