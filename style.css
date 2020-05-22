@@ -1,4 +1,8 @@
 /* plugin:tcycle */
-.tcycle { max-width: 100%; height: auto; margin: 1em auto; border-top: 1px solid @ini_border; border-bottom: 1px solid @ini_border; }
-.tcycle img.media, .dokuwiki .tcycle img.media  { object-fit: scale-down; margin: 0.5em 0; }
+.tcycle { max-width: 100%; height: auto; margin: 1em auto; }
+.tcycle img.media, .dokuwiki .tcycle img.media  { object-fit: scale-down; margin: 0; }
+.tcycle figure {  }
+.tcycle figcaption             { text-align: center; }
+.tcycle figcaption:first-child { font-variant: small-caps; border-bottom: 1px solid @ini_border; }
+.tcycle figcaption:last-child  { font-style: italic; margin-bottom: 5em; border-top: 1px solid @ini_border;}
 /* end plugin:tcycle */

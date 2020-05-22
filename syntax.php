@@ -117,9 +117,13 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
 			$meta  = new JpegMeta($file);
 			$title = $meta->getField('Simple.Title');
 			$alt   = $meta->getField('Iptc.Caption');
+			$images .= '<figure>';
+			$images .= '<figcaption>'.$title.'</figcaption>';
 			$images .= '<a href="/_detail/'.$ns.'/'.$base.'" target="'.$target.'" rel ="'.$relnf.' noopener">';
 			$images .= '<img class="media" src=" /_media/'.$ns.'/'.$base.'" title="'.$title.'" alt="'.$alt.'" />';
 			$images .= '</a>';
+			$images .= '<figcaption>'.$alt.'</figcaption>';
+			$images .= '</figure>';
        	}
 		return $images;
 	}
