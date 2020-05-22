@@ -100,8 +100,11 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
     }
 	function _getNsImages($ns) {
 		global $conf;
-        $files = array();
+        $files  = array();
 		$images = '';
+		$target = $conf['target']['media'];
+		$relnf  = '';
+		if ($conf['relnofollow'] == 1) { $relnf = 'nofollow'; }
 		if ($ns == ".") {
 			$ns = getNS(cleanID(getID()));
 		} elseif ($ns == "") {
@@ -111,7 +114,7 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
 		$files  = glob($conf['mediadir'].'/'.$ns."/*.{jp*g,png,gif}", GLOB_BRACE);
        	foreach($files as $file) {
 			$base = pathinfo($file, PATHINFO_BASENAME);
-			$images .= '<a href="/_detail/'.$ns.'/'.$base.'" target="_blank" title="'.$ns.'/'.$base.'" rel ="noopener">';
+			$images .= '<a href="/_detail/'.$ns.'/'.$base.'" target="'.$target.'" title="'.$ns.'/'.$base.'" rel ="'.$relnf.' noopener">';
 			$images .= '<img class="media" src=" /_media/'.$ns.'/'.$base.'" />';
 			$images .= '</a>';
        	}
