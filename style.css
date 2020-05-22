@@ -1,8 +1,8 @@
 /* plugin:tcycle */
 .tcycle { max-width: 100%; height: auto; margin: 1.5em auto; }
-.tcycle img.media, .dokuwiki .tcycle img.media  { object-fit: scale-down; margin: 0; padding: 0.5em 0; }
+.tcycle img.media, .dokuwiki .tcycle img.media  { object-fit: scale-down; margin: 0; padding: 0.5em 0; border-top: 1px solid @ini_border; border-bottom: 1px solid @ini_border; }
 .tcycle figure { }
 .tcycle figcaption             { font-size: smaller; text-align: center; }
-.tcycle figcaption:first-child { font-variant: small-caps; border-bottom: 1px solid @ini_border; }
-.tcycle figcaption:last-child  { font-style: italic; padding-bottom: 2em; border-top: 1px solid @ini_border;}
+.tcycle figcaption:first-child { font-variant: small-caps; }
+.tcycle figcaption:last-child  { font-style: italic; padding-bottom: 2em; }
 /* end plugin:tcycle */
