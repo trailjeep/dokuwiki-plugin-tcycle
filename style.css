@@ -1,5 +1,5 @@
 /* plugin:tcycle */
-.tcycle { max-width: 100%; height: auto; margin: 1em auto; }
+.tcycle { max-width: 100%; height: auto; margin: 1.5em auto; }
 .tcycle img.media, .dokuwiki .tcycle img.media  { object-fit: scale-down; margin: 0; padding: 0.5em 0; }
 .tcycle figure { }
 .tcycle figcaption             { font-size: smaller; text-align: center; }
