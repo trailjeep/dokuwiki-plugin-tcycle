@@ -16,9 +16,6 @@ if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
  * need to inherit from this class
  */
 class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
-    var $dataspeed='500';
-    var $datafx='fade';
-    var $datatimeout='4000';
     
     function getType(){ return 'formatting';}
     function getPType(){ return 'normal';}
@@ -33,12 +30,14 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
     function handle($match, $state, $pos, Doku_Handler $handler) {
         switch($state) {
             case DOKU_LEXER_ENTER:
-                $attributes = strtolower(substr($match, 5, -1));
-                $dataspeed = $this->_getAttribute($attributes, "data-speed", "500");
-                $datafx = $this->_getAttribute($attributes, "data-fx", "fade");
+                $attributes  = strtolower(substr($match, 5, -1));
+                $dataspeed   = $this->_getAttribute($attributes, "data-speed", "500");
+                $datafx      = $this->_getAttribute($attributes, "data-fx", "fade");
                 $datatimeout = $this->_getAttribute($attributes, "data-timeout", "4000");
+				$width       = $this->_getAttribute($attributes, "width", "600px");
+				$height      = $this->_getAttribute($attributes, "height", "400px");
 
-                return array($state, array($dataspeed,$datafx,$datatimeout));
+                return array($state, array($dataspeed,$datafx,$datatimeout, $width, $height));
             case DOKU_LEXER_UNMATCHED:
                 return array($state, $match);
             case DOKU_LEXER_EXIT:
@@ -55,8 +54,8 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
             list($state,$match) = $data;
             switch ($state) {
               case DOKU_LEXER_ENTER :
-                list($this->dataspeed,$this->datafx,$this->datatimeout) = $match;
-                $renderer->doc .= '<div class="tcycle" ';
+                list($this->dataspeed,$this->datafx,$this->datatimeout,$this->width,$this->height) = $match;
+                $renderer->doc .= '<div class="tcycle" style="width: '.$this->width.'; height: '.$this->height.';"';
 				$renderer->doc .= 'data-speed="'.$this->dataspeed.'" ';
 				$renderer->doc .= 'data-fx="'.$this->datafx.'" ';
 				$renderer->doc .= 'data-timeout="'.$this->datatimeout.'">';
