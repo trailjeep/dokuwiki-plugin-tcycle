@@ -67,7 +67,7 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
               case DOKU_LEXER_EXIT :       
 				$images = $this->_getNsImages($this->namespace);
 				$renderer->doc .= $images;
-                $renderer->doc .= "</div>"; 
+                $renderer->doc .= '</div>'; 
                 break;
             }
             return true;
