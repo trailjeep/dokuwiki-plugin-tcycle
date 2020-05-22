@@ -36,8 +36,9 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
                 $datatimeout = $this->_getAttribute($attributes, "data-timeout", "4000");
 				$width       = $this->_getAttribute($attributes, "width", "600px");
 				$height      = $this->_getAttribute($attributes, "height", "400px");
+                $namespace   = $this->_getAttribute($attributes, "namespace", "");
 
-                return array($state, array($dataspeed,$datafx,$datatimeout, $width, $height));
+                return array($state, array($dataspeed,$datafx,$datatimeout, $width, $heighti, $namespace));
             case DOKU_LEXER_UNMATCHED:
                 return array($state, $match);
             case DOKU_LEXER_EXIT:
@@ -54,7 +55,7 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
             list($state,$match) = $data;
             switch ($state) {
               case DOKU_LEXER_ENTER :
-                list($this->dataspeed,$this->datafx,$this->datatimeout,$this->width,$this->height) = $match;
+                list($this->dataspeed,$this->datafx,$this->datatimeout,$this->width,$this->height,$this->namespace) = $match;
                 $renderer->doc .= '<div class="tcycle" style="width: '.$this->width.'; height: '.$this->height.';"';
 				$renderer->doc .= 'data-speed="'.$this->dataspeed.'" ';
 				$renderer->doc .= 'data-fx="'.$this->datafx.'" ';
@@ -64,6 +65,8 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
                 $renderer->doc .= $renderer->_xmlEntities($match);
                 break;
               case DOKU_LEXER_EXIT :       
+				$images = $this->_getNsImages($this->namespace);
+				$renderer->doc .= $images;
                 $renderer->doc .= "</div>"; 
                 break;
             }
@@ -83,10 +86,7 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
             $value = substr($attributeString,$pos);
             
             //replace '=' and quote signs with null and trim leading spaces
-            $value = str_replace("=","",$value);
-            $value = str_replace("'","",$value);
-            $value = str_replace('"','',$value);
-            $value = ltrim($value);
+			$value = ltrim(str_replace(['=', "'", '"'], '', $value));
             
             //grab the text before the next space
             $pos = strpos($value, " ");
@@ -98,5 +98,24 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
         }
         return $retVal;
     }
+	function _getNsImages($ns) {
+		global $conf;
+        $files = array();
+		$images = '';
+		if ($ns == ".") {
+			$ns = getNS(cleanID(getID()));
+		} elseif ($ns == "") {
+			return false;
+		}
+		$ns     = str_replace(':', '/', $ns);
+		$files  = glob($conf['mediadir'].'/'.$ns."/*.{jp*g,png,gif}", GLOB_BRACE);
+       	foreach($files as $file) {
+			$base = pathinfo($file, PATHINFO_BASENAME);
+			$images .= '<a class="media" href="/_detail/'.$ns.'/'.$base.'" target="_blank" title="'.$ns.'/'.$base.'" rel ="noopener">';
+			$images .= '<img class="media" src=" /_media/'.$ns.'/'.$base.'" />';
+			$images .= '</a>';
+       	}
+		return $images;
+	}
 }
 //Setup VIM: ex: et ts=4 enc=utf-8 :
