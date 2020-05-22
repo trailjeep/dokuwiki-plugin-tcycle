@@ -113,9 +113,12 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
 		$ns     = str_replace(':', '/', $ns);
 		$files  = glob($conf['mediadir'].'/'.$ns."/*.{jp*g,png,gif}", GLOB_BRACE);
        	foreach($files as $file) {
-			$base = pathinfo($file, PATHINFO_BASENAME);
-			$images .= '<a href="/_detail/'.$ns.'/'.$base.'" target="'.$target.'" title="'.$ns.'/'.$base.'" rel ="'.$relnf.' noopener">';
-			$images .= '<img class="media" src=" /_media/'.$ns.'/'.$base.'" />';
+			$base  = pathinfo($file, PATHINFO_BASENAME);
+			$meta  = new JpegMeta($file);
+			$title = $meta->getField('Simple.Title');
+			$alt   = $meta->getField('Iptc.Caption');
+			$images .= '<a href="/_detail/'.$ns.'/'.$base.'" target="'.$target.'" rel ="'.$relnf.' noopener">';
+			$images .= '<img class="media" src=" /_media/'.$ns.'/'.$base.'" title="'.$title.'" alt="'.$alt.'" />';
 			$images .= '</a>';
        	}
 		return $images;
