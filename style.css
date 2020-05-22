@@ -1,4 +1,4 @@
 /* plugin:tcycle */
-.tcycle      { max-width: 100%; height: auto; margin: 1em auto }
+.tcycle      { max-width: 100%; height: auto; margin: 1em auto; padding-bottom: 1.5em; border-top: 1px solid @ini_border; border-bottom: 1px solid @ini_border; }
 .tcycle img  { object-fit: scale-down; }
 /* end plugin:tcycle */
