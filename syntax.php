@@ -40,7 +40,8 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
 				$height      = $this->_getAttribute($attributes, "height", "400px");
                 $namespace   = $this->_getAttribute($attributes, "namespace", "");
 				$metadata    = $this->_getAttribute($attributes, "metadata", "true");
-                return array($state, array($dataspeed,$datafx,$datatimeout, $width, $height, $namespace, $metadata));
+				$objectfit   = $this->_getAttribute($attributes, "object-fit", "contain");
+                return array($state, array($dataspeed, $datafx, $datatimeout, $width, $height, $namespace, $metadata, $objectfit));
 			case DOKU_LEXER_MATCHED:
 				global $conf;
 				$addimgs = trim($match);
@@ -66,7 +67,7 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
             list($state,$match) = $data;
             switch ($state) {
               case DOKU_LEXER_ENTER :
-                list($this->dataspeed,$this->datafx,$this->datatimeout,$this->width,$this->height,$this->namespace,$this->metadata) = $match;
+                list($this->dataspeed, $this->datafx, $this->datatimeout, $this->width, $this->height, $this->namespace, $this->metadata, $this->objectfit) = $match;
 				$renderer->doc .= '<div class="tcycle" style="width: '.$this->width.';"';
 				$renderer->doc .= 'data-speed="'.$this->dataspeed.'" ';
 				$renderer->doc .= 'data-fx="'.$this->datafx.'" ';
@@ -139,7 +140,7 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
 				$images .= '<figcaption>'.$title.'</figcaption>';
 			}
 			$images .= '<a href="'.$detail.'" target="'.$target.'" rel ="'.$relnf.' noopener">';
-			$images .= '<img class="media" src="'.$media.'" title="'.$title.'" alt="'.$alt.'" style="width: '.$this->width.'; height: '.$this->height.';" />';
+			$images .= '<img class="media" src="'.$media.'" title="'.$title.'" alt="'.$alt.'" style="object-fit: '.$this->objectfit.'; width: '.$this->width.'; height: '.$this->height.';" />';
 			$images .= '</a>';
 			if ( $this->metadata === 'true' ) {
 				$images .= '<figcaption>'.$alt.'</figcaption>';
