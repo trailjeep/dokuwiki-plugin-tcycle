@@ -129,7 +129,6 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
 		$files = array_merge((array)$files, (array)$addimgs);
 		foreach($files as $file) {
 			if (!is_file($file)) { break; }
-			
 			$detail = str_replace($conf['mediadir'], '/_detail', $file);
 			$media  = str_replace($conf['mediadir'], '/_media', $file);
 			$meta  = new JpegMeta($file);
