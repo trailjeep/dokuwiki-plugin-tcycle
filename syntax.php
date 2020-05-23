@@ -126,9 +126,10 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
 		}
 		$ns     = str_replace(':', '/', $ns);
 		$files  = glob($conf['mediadir'].'/'.$ns."/*.{jp*g,png,gif}", GLOB_BRACE);
-		//$files  = array_merge($addimgs, $files);
 		$files = array_merge((array)$files, (array)$addimgs);
-       	foreach($files as $file) {
+		foreach($files as $file) {
+			if (!is_file($file)) { break; }
+			
 			$detail = str_replace($conf['mediadir'], '/_detail', $file);
 			$media  = str_replace($conf['mediadir'], '/_media', $file);
 			$meta  = new JpegMeta($file);
