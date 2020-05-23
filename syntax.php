@@ -138,7 +138,7 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
 			if ( $this->metadata === 'true' ) {
 				$images .= '<figcaption>'.$title.'</figcaption>';
 			}
-			$images .= '<a href="'.$detail.'" target="'.$target.'" rel ="'.$relnf.' noopener" style="max-width: '.$this->width.'; max-height: '.$this->height.';">';
+			$images .= '<a href="'.$detail.'" target="'.$target.'" rel ="'.$relnf.' noopener">';
 			$images .= '<img class="media" src="'.$media.'" title="'.$title.'" alt="'.$alt.'" style="width: '.$this->width.'; height: '.$this->height.';" />';
 			$images .= '</a>';
 			if ( $this->metadata === 'true' ) {
