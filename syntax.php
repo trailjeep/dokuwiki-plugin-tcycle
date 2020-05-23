@@ -34,7 +34,7 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
             case DOKU_LEXER_ENTER:
                 $attributes  = strtolower(substr($match, 5, -1));
                 $dataspeed   = $this->_getAttribute($attributes, "data-speed", "500");
-                $datafx      = $this->_getAttribute($attributes, "data-fx", "fade");
+                $datafx      = $this->_getAttribute($attributes, "data-fx", "scroll");
                 $datatimeout = $this->_getAttribute($attributes, "data-timeout", "4000");
 				$width       = $this->_getAttribute($attributes, "width", "600px");
 				$height      = $this->_getAttribute($attributes, "height", "400px");
@@ -138,7 +138,7 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
 			if ( $this->metadata === 'true' ) {
 				$images .= '<figcaption>'.$title.'</figcaption>';
 			}
-			$images .= '<a href="'.$detail.'" target="'.$target.'" rel ="'.$relnf.' noopener">';
+			$images .= '<a href="'.$detail.'" target="'.$target.'" rel ="'.$relnf.' noopener" style="max-width: '.$this->width.'; max-height: '.$this->height.';">';
 			$images .= '<img class="media" src="'.$media.'" title="'.$title.'" alt="'.$alt.'" style="width: '.$this->width.'; height: '.$this->height.';" />';
 			$images .= '</a>';
 			if ( $this->metadata === 'true' ) {
