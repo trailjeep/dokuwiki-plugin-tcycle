@@ -52,9 +52,9 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
             case DOKU_LEXER_MATCHED:
                 global $conf;
                 $addimgs = trim($match);
-                $addimgs = preg_replace('/\{\{:?/', $conf['mediadir'].'/', $addimgs);
+                $addimgs = preg_replace('/\{\{ ?:?/', $conf['mediadir'].'/', $addimgs);
                 $addimgs = preg_replace('/\?.*\}\}/', '', $addimgs);
-                $addimgs = preg_replace('/\|.*?\}\}/', '', $addimgs);
+                $addimgs = preg_replace('/\| ?.*?\}\}/', '', $addimgs);
                 $addimgs = str_replace(':', '/', $addimgs);
                 $addimgs = preg_split('/\s+/', $addimgs);
                 return array($state, array($addimgs));
