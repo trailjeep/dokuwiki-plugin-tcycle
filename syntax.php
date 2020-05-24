@@ -111,7 +111,7 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
                 $value = substr($value,0,$pos);
             }
             
-            $retVal = $value;
+            $retVal = hsc($value);
         }
         return $retVal;
     }
