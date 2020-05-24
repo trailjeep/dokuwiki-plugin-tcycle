@@ -136,17 +136,15 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
 			$media  = str_replace($conf['mediadir'], '/_media', $file);
 			$meta  = new JpegMeta($file);
 			$title = $meta->getField('Simple.Title');
+			if ($title === "") { $title = " "; }
 			$alt   = $meta->getField('Iptc.Caption');
+			if ($alt === "") { $alt = " "; }
 			$images .= '<figure>';
-			if ($this->metadata === 1) {
-				$images .= '<figcaption>'.$title.'</figcaption>';
-			}
+			if ($this->metadata === 1) { $images .= '<figcaption>'.$title.'</figcaption>'; }
 			$images .= '<a href="'.$detail.'" target="'.$target.'" rel ="'.$relnf.' noopener">';
 			$images .= '<img class="media" src="'.$media.'" title="'.$title.'" alt="'.$alt.'" style="object-fit: '.$this->objectfit.'; width: '.$this->width.'; height: '.$this->height.';" />';
 			$images .= '</a>';
-			if ( $this->metadata === 'true' ) {
-				$images .= '<figcaption>'.$alt.'</figcaption>';
-			}
+			if ( $this->metadata === 1 ) { $images .= '<figcaption>'.$alt.'</figcaption>'; }
 			$images .= '</figure>';
        	}
 		return $images;
