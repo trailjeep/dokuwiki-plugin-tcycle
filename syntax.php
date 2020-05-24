@@ -82,7 +82,7 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
                 $renderer->doc .= $renderer->_xmlEntities($match);
                 break;
               case DOKU_LEXER_EXIT :       
-				$images = $this->_getNsImages($this->namespace, $this->addimgs);
+				$images = $this->_getImages($this->namespace, $this->addimgs);
 				$renderer->doc .= $images;
                 $renderer->doc .= '</div>'; 
                 break;
@@ -115,7 +115,7 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
         }
         return $retVal;
     }
-	function _getNsImages($ns, $addimgs) {
+	function _getImages($ns, $addimgs) {
 		global $conf;
         $files  = array();
 		$images = '';
