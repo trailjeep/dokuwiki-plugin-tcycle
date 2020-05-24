@@ -19,7 +19,7 @@ Example (with default values):
 ...
 </tcycle>
 ```
-Or, for all defaults as set in config maager with no additional images:
+Or, for all defaults as set in config manager with no additional images:
 ```
 <tcycle></tcycle>
 ```
