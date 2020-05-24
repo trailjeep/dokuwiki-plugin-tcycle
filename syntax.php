@@ -39,7 +39,12 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
                 $datatimeout = $this->_getAttribute($attributes, "timeout", $this->getConf('timeout'));
 				$width       = $this->_getAttribute($attributes, "width", $this->getConf('width'));
 				$height      = $this->_getAttribute($attributes, "height", $this->getConf('height'));
-                $namespace   = $this->_getAttribute($attributes, "namespace", "");
+                $namespace   = $this->_getAttribute($attributes, "namespace", $this->getConf('namespace')); 
+				if ($namespace === 1) {
+					$namespace = str_replace(':', '/', getNS(cleanID(getID())));
+				} elseif ($namespace !== 0) {
+					$namespace = str_replace(':', '/', $namespace);
+				}
 				$metadata    = $this->_getAttribute($attributes, "metadata", $this->getConf('metadata'));
 				$objectfit   = $this->_getAttribute($attributes, "fit", $this->getConf('fit'));
 				if (!in_array($objectfit, array('fill','contain','cover','scale-down','none'))) { $objectfit = $this->getConf('fit'); }
@@ -111,24 +116,18 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
                 $value = substr($value,0,$pos);
             }
             
-            $retVal = hsc($value);
+			$retVal = hsc($value);
         }
         return $retVal;
     }
-	function _getImages($ns, $addimgs) {
+	function _getImages($namespace, $addimgs) {
 		global $conf;
         $files  = array();
 		$images = '';
 		$target = $conf['target']['media'];
 		$relnf  = '';
 		if ($conf['relnofollow'] == 1) { $relnf = 'nofollow'; }
-		if ($ns == ".") {
-			$ns = getNS(cleanID(getID()));
-		} elseif ($ns == "") {
-			return false;
-		}
-		$ns     = str_replace(':', '/', $ns);
-		$files  = glob($conf['mediadir'].'/'.$ns."/*.{jp*g,png,gif}", GLOB_BRACE);
+		if ($namespace !== 0) { $files  = glob($conf['mediadir'].'/'.$namespace."/*.{jp*g,png,gif}", GLOB_BRACE); }
 		$files = array_merge((array)$files, (array)$addimgs);
 		foreach($files as $file) {
 			if (!is_file($file)) { break; }
