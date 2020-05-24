@@ -2,8 +2,9 @@
 /**
  * Plugin tcycle: tiny cycle
  * 
- * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author     Reinhard Kaeferboeck <rfk@kaeferboeck.info>
+ * @license GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author  Reinhard Kaeferboeck <rfk@kaeferboeck.info>
+ * @author  Trailjeep <trailjeep@gmail.com>
  */
  
 // must be run within Dokuwiki
