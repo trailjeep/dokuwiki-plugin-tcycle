@@ -33,14 +33,16 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
         switch($state) {
             case DOKU_LEXER_ENTER:
                 $attributes  = strtolower(substr($match, 5, -1));
-                $dataspeed   = $this->_getAttribute($attributes, "data-speed", "500");
-                $datafx      = $this->_getAttribute($attributes, "data-fx", "scroll");
-                $datatimeout = $this->_getAttribute($attributes, "data-timeout", "4000");
-				$width       = $this->_getAttribute($attributes, "width", "600px");
-				$height      = $this->_getAttribute($attributes, "height", "400px");
+                $dataspeed   = $this->_getAttribute($attributes, "speed", $this->getConf('speed'));
+                $datafx      = $this->_getAttribute($attributes, "fx", $this->getConf('fx'));
+				if (!in_array($datafx, array('scroll', 'fade'))) { $datafx = $this->getConf('fx'); }
+                $datatimeout = $this->_getAttribute($attributes, "timeout", $this->getConf('timeout'));
+				$width       = $this->_getAttribute($attributes, "width", $this->getConf('width'));
+				$height      = $this->_getAttribute($attributes, "height", $this->getConf('height'));
                 $namespace   = $this->_getAttribute($attributes, "namespace", "");
-				$metadata    = $this->_getAttribute($attributes, "metadata", "true");
-				$objectfit   = $this->_getAttribute($attributes, "object-fit", "contain");
+				$metadata    = $this->_getAttribute($attributes, "metadata", $this->getConf('metadata'));
+				$objectfit   = $this->_getAttribute($attributes, "fit", $this->getConf('fit'));
+				if (!in_array($objectfit, array('fill','contain','cover','scale-down','none'))) { $objectfit = $this->getConf('fit'); }
                 return array($state, array($dataspeed, $datafx, $datatimeout, $width, $height, $namespace, $metadata, $objectfit));
 			case DOKU_LEXER_MATCHED:
 				global $conf;
@@ -136,7 +138,7 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
 			$title = $meta->getField('Simple.Title');
 			$alt   = $meta->getField('Iptc.Caption');
 			$images .= '<figure>';
-			if ( $this->metadata === 'true' ) {
+			if ($this->metadata === 1) {
 				$images .= '<figcaption>'.$title.'</figcaption>';
 			}
 			$images .= '<a href="'.$detail.'" target="'.$target.'" rel ="'.$relnf.' noopener">';
