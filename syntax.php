@@ -33,10 +33,10 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
         switch($state) {
             case DOKU_LEXER_ENTER:
                 $attributes  = strtolower(substr($match, 5, -1));
-                $dataspeed   = $this->_getAttribute($attributes, "speed", $this->getConf('speed'));
-                $datafx      = $this->_getAttribute($attributes, "fx", $this->getConf('fx'));
-                if (!in_array($datafx, array('scroll', 'fade'))) { $datafx = $this->getConf('fx'); }
-                $datatimeout = $this->_getAttribute($attributes, "timeout", $this->getConf('timeout'));
+                $dataspeed   = $this->_getAttribute($attributes, "data-speed", $this->getConf('data-speed'));
+                $datafx      = $this->_getAttribute($attributes, "data-fx", $this->getConf('data-fx'));
+                if (!in_array($datafx, array('scroll', 'fade'))) { $datafx = $this->getConf('data-fx'); }
+                $datatimeout = $this->_getAttribute($attributes, "data-timeout", $this->getConf('data-timeout'));
                 $width       = $this->_getAttribute($attributes, "width", $this->getConf('width'));
                 $height      = $this->_getAttribute($attributes, "height", $this->getConf('height'));
                 $namespace   = $this->_getAttribute($attributes, "namespace", $this->getConf('namespace')); 
