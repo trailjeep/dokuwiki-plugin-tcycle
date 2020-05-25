@@ -6,4 +6,4 @@ $conf['data-timeout'] = 4000;
 $conf['data-fx']      = 'scroll';
 $conf['metadata']     = 1;
 $conf['fit']          = 'contain';
-$conf['namespace']    = 1;
+//$conf['namespace']    = 1;

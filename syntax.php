@@ -41,7 +41,8 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
                 $datatimeout = $this->_getAttribute($attributes, "data-timeout", $this->getConf('data-timeout'));
                 $width       = $this->_getAttribute($attributes, "width", $this->getConf('width'));
                 $height      = $this->_getAttribute($attributes, "height", $this->getConf('height'));
-                $namespace   = $this->_getAttribute($attributes, "namespace", $this->getConf('namespace')); 
+                //$namespace   = $this->_getAttribute($attributes, "namespace", $this->getConf('namespace'));
+                $namespace   = $this->_getAttribute($attributes, "namespace", '');
                 if ($namespace === 1) { $namespace = getNS(cleanID(getID())); }
                 $namespace   = preg_replace("/(^[:\/]|[:\/]$)/", '', $namespace);
                 $namespace   = str_replace(':', '/', $namespace);
@@ -71,7 +72,7 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
      */
     function render($mode, Doku_Renderer $renderer, $data) {
         if($mode == 'xhtml'){
-            $renderer->info['cache'] &= false;
+            //$renderer->info['cache'] &= false;
             list($state,$match) = $data;
             switch ($state) {
                 case DOKU_LEXER_ENTER :
