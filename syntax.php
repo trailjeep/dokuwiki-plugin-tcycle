@@ -41,11 +41,9 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
                 $width       = $this->_getAttribute($attributes, "width", $this->getConf('width'));
                 $height      = $this->_getAttribute($attributes, "height", $this->getConf('height'));
                 $namespace   = $this->_getAttribute($attributes, "namespace", $this->getConf('namespace')); 
-                if ($namespace === 1) {
-                    $namespace = str_replace(':', '/', getNS(cleanID(getID())));
-                } elseif ($namespace !== 0) {
-                    $namespace = str_replace(':', '/', $namespace);
-                }
+                if ($namespace === 1) { $namespace = getNS(cleanID(getID())); }
+                $namespace   = preg_replace("/(^[:\/]|[:\/]$)/", '', $namespace);
+                $namespace   = str_replace(':', '/', $namespace);
                 $metadata    = $this->_getAttribute($attributes, "metadata", $this->getConf('metadata'));
                 $objectfit   = $this->_getAttribute($attributes, "fit", $this->getConf('fit'));
                 if (!in_array($objectfit, array('fill','contain','cover','scale-down','none'))) { $objectfit = $this->getConf('fit'); }
