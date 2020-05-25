@@ -9,8 +9,9 @@
  
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
- 
 if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
+require_once(DOKU_PLUGIN.'syntax.php');
+require_once(DOKU_INC.'inc/JpegMeta.php');
  
 /**
  * All DokuWiki plugins to extend the parser/rendering mechanism
@@ -70,6 +71,7 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
      */
     function render($mode, Doku_Renderer $renderer, $data) {
         if($mode == 'xhtml'){
+            $renderer->info['cache'] &= false;
             list($state,$match) = $data;
             switch ($state) {
                 case DOKU_LEXER_ENTER :
