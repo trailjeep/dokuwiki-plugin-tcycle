@@ -6,4 +6,4 @@ $lang['data-timeout'] = 'Number of ms between transitions.';
 $lang['data-fx']      = 'The name of the effect to use.';
 $lang['metadata']     = 'Show image metadata (e.g., Title & Caption)';
 $lang['fit']          = 'CSS object-fit property (how image should be resized to fit container.';
-//$lang['namespace']    = 'Use image files from the current namespace.';
+$lang['namespace']    = 'Use image files from the current namespace.';
