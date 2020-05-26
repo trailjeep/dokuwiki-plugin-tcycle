@@ -18,9 +18,8 @@ require_once(DOKU_INC.'inc/JpegMeta.php');
  * need to inherit from this class
  */
 class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
-    function getType(){ return 'formatting';}
-    function getPType(){ return 'normal';}
-    function getAllowedTypes() { return array('container','substition','protected','disabled','formatting','paragraphs'); }
+    function getType(){ return 'protected';}
+    function getPType(){ return 'block';}
     function getSort(){ return 195; }
     function connectTo($mode) {
         $this->Lexer->addEntryPattern('<tcycle.*?>(?=.*?</tcycle>)',$mode,'plugin_tcycle');
@@ -41,23 +40,13 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
                 $datatimeout = $this->_getAttribute($attributes, "data-timeout", $this->getConf('data-timeout'));
                 $width       = $this->_getAttribute($attributes, "width", $this->getConf('width'));
                 $height      = $this->_getAttribute($attributes, "height", $this->getConf('height'));
-                //$namespace   = $this->_getAttribute($attributes, "namespace", $this->getConf('namespace'));
-                $namespace   = $this->_getAttribute($attributes, "namespace", '');
-                if ($namespace === 1) { $namespace = getNS(cleanID(getID())); }
-                $namespace   = preg_replace("/(^[:\/]|[:\/]$)/", '', $namespace);
-                $namespace   = str_replace(':', '/', $namespace);
+                $namespace   = $this->_getAttribute($attributes, "namespace", $this->getConf('namespace'));
                 $metadata    = $this->_getAttribute($attributes, "metadata", $this->getConf('metadata'));
                 $objectfit   = $this->_getAttribute($attributes, "fit", $this->getConf('fit'));
                 if (!in_array($objectfit, array('fill','contain','cover','scale-down','none'))) { $objectfit = $this->getConf('fit'); }
                 return array($state, array($dataspeed, $datafx, $datatimeout, $width, $height, $namespace, $metadata, $objectfit));
             case DOKU_LEXER_MATCHED:
-                global $conf;
-                $addimgs = trim($match);
-                $addimgs = preg_replace('/\{\{ ?:?/', $conf['mediadir'].'/', $addimgs);
-                $addimgs = preg_replace('/\?.*\}\}/', '', $addimgs);
-                $addimgs = preg_replace('/\| ?.*?\}\}/', '', $addimgs);
-                $addimgs = str_replace(':', '/', $addimgs);
-                $addimgs = preg_split('/\s+/', $addimgs);
+                $addimgs = $match;
                 return array($state, array($addimgs));
             case DOKU_LEXER_UNMATCHED:
                 return array($state, $match);
@@ -72,7 +61,7 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
      */
     function render($mode, Doku_Renderer $renderer, $data) {
         if($mode == 'xhtml'){
-            //$renderer->info['cache'] &= false;
+            $renderer->info['cache'] &= false;
             list($state,$match) = $data;
             switch ($state) {
                 case DOKU_LEXER_ENTER :
@@ -128,7 +117,14 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
         $target = $conf['target']['media'];
         $relnf  = '';
         if ($conf['relnofollow'] == 1) { $relnf = 'nofollow'; }
+        if ($namespace === 1) { $namespace = getNS(cleanID(getID())); }
+        $namespace = preg_replace("/(^[:\/]|[:\/]$)/", '', $namespace);
+        $namespace = str_replace(':', '/', $namespace);
         if ($namespace !== 0) { $files  = glob($conf['mediadir'].'/'.$namespace."/*.{jp*g,png,gif}", GLOB_BRACE); }
+        $addimgs = trim(preg_replace('/\{\{ ?:?/', $conf['mediadir'].'/', $addimgs));
+        $addimgs = preg_replace('/[\?\|]+.*\}\}/', '', $addimgs);
+        $addimgs = str_replace(':', '/', $addimgs);
+        $addimgs = preg_split('/\s+/', $addimgs);
         $files = array_merge((array)$files, (array)$addimgs);
         foreach($files as $file) {
             if (!is_file($file)) { break; }
@@ -145,7 +141,7 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
             $images .= '<img class="media" src="'.$media.'" title="'.$title.'" alt="'.$alt.'" style="object-fit: '.$this->objectfit.'; width: '.$this->width.'; height: '.$this->height.';" />';
             $images .= '</a>';
             if ( $this->metadata === 1 ) { $images .= '<figcaption>'.$alt.'</figcaption>'; }
-            $images .= '</figure>';
+            $images .= "</figure>\n";
         }
         return $images;
     }
