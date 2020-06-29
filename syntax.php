@@ -128,8 +128,8 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
         $files = array_merge((array)$files, (array)$addimgs);
         foreach($files as $file) {
             if (!is_file($file)) { break; }
-            $detail = str_replace($conf['mediadir'], '/_detail', $file);
-            $media  = str_replace($conf['mediadir'], '/_media', $file);
+            $detail = ml(str_replace($conf['mediadir'], '/', $file), false, false);
+            $media  = ml(str_replace($conf['mediadir'], '/', $file));
             $meta  = new JpegMeta($file);
             $title = $meta->getField('Simple.Title');
             if ($title === "") { $title = " "; }
@@ -138,7 +138,7 @@ class syntax_plugin_tcycle extends DokuWiki_Syntax_Plugin {
             $images .= '<figure>';
             if ($this->metadata === 1) { $images .= '<figcaption>'.$title.'</figcaption>'; }
             $images .= '<a href="'.$detail.'" target="'.$target.'" rel ="'.$relnf.' noopener">';
-            $images .= '<img class="media" src="'.$media.'" title="'.$title.'" alt="'.$alt.'" style="object-fit: '.$this->objectfit.'; width: '.$this->width.'; height: '.$this->height.';" />';
+            $images .= '<img class="media" src="'.$media.'" title="'.$title.'" alt="'.$alt.'" style="object-fit: '.$this->objectfit.'; width: '.$this->width.'; height: '.$this->height.';">';
             $images .= '</a>';
             if ( $this->metadata === 1 ) { $images .= '<figcaption>'.$alt.'</figcaption>'; }
             $images .= "</figure>\n";
